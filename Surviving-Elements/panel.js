@@ -9,7 +9,7 @@ Panel = function(){
 		counter = 0,
 		ctx,
 		ctxBg,
-	    fps =  60,
+	        fps =  60,
 		cursor,
 		hero,
 		background,
@@ -69,9 +69,8 @@ Panel = function(){
 		drawRotatedImage(hero);
 	}
 	function paintBg(){
-		var img = background.getImage(),
-			w=0,h =0;
-		for (; w<canvas.width; w += background.width) {
+	    var img = background.getImage(),w=0,h =0;
+	    for (; w<canvas.width; w += background.width) {
 	        for (;h<canvas.height; h += background.height) {
 	            ctxBg.drawImage(img, (w + background.x) - background.width , h + background.y);
 	        }
@@ -108,7 +107,6 @@ Panel = function(){
 		gameOver = 1;
 		enemies = [];
 		hero.bullets = [];
-		ctx.fillStyle = backgroundColor;
 		ctx.fillRect(0, 0, canvas.width, canvas.height);
 		ctx.font = "30px Arial";
 		ctx.strokeText("Game Over Press to Continue",10,50);
@@ -203,7 +201,7 @@ Panel = function(){
 		for (var i = 0; i < enemies.length; i++) {
 			if(currentEnemy.id != enemies[i].id && 
 				(intersect(currentEnemy,enemies[i]))){
-				if(currentEnemy.element.Name === enemies[i].element.Name){
+				if(currentEnemy.element.name === enemies[i].element.name){
 					currentEnemy.speed += 0.1;
 			    	currentEnemy.health += 1;
 			    	if(currentEnemy.width < (hero.width * 2)){
@@ -212,7 +210,7 @@ Panel = function(){
 			    			currentEnemy.height = enemies[i].height;
 			    		}
 			    		currentEnemy.width+=1;
-			   			currentEnemy.height+=1;
+			   		currentEnemy.height+=1;
 			   		}
 			   		enemies.splice(i,1);
 				}else{
