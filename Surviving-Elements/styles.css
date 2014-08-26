@@ -1,0 +1,14 @@
+canvas {
+	cursor: none;
+	position: absolute;
+	top: 15%;
+	left: 6%;
+	background: transparent;
+}
+.Water{background-color: #0180CA;}
+.Ground{background-color: #655619;}
+.Wind{background-color: #CCFFFF;}
+.Fire{background-color: #CA0F01;}
+.center{margin-top:5%;margin-left:10%;}
+.elements{text-align: center;}
+.elements > div{ text-align: center;cursor: pointer;}
