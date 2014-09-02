@@ -1,6 +1,6 @@
 es='';
 elements= ['Water','Ground','Fire','Wind'];
-Panel = function(){
+Game = function(){
 	var canvas = get('canvas'),
 		bg = get('bg'),
 		current = get('current'),
