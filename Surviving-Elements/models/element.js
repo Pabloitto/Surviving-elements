@@ -1,8 +1,8 @@
-Element = function(){
+$.Element = function(){
 	return {
 		getRandomElement : function(){
-			var	r = Math.floor(Math.random()*(elements.length)),
-				e = elements[r];
+			var	r = Math.floor(Math.random()*($.elements.length)),
+				e = $.elements[r];
 			return this.types[e];
 		},
 		types : {

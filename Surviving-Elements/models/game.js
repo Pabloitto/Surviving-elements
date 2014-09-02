@@ -1,9 +1,7 @@
-es='';
-elements= ['Water','Ground','Fire','Wind'];
-Game = function(){
-	var canvas = get('canvas'),
-		bg = get('bg'),
-		current = get('current'),
+$.Game = function(){
+	var canvas = $.get('canvas'),
+		bg = $.get('bg'),
+		current = $.get('current'),
 		explosion,
 		eTypes,
 		counter = 0,
@@ -14,8 +12,9 @@ Game = function(){
 		hero,
 		background,
 		enemies = [],
+		keyEventListener,
+		mouseEventListener,
 		gameOver = 0,
-		keys=[],
 		levelSpeed=0.1,
 		gun=0,
 		eh;
@@ -29,17 +28,17 @@ Game = function(){
 		ctx = canvas.getContext('2d');
 		ctxBg = bg.getContext('2d');
 		bindEvents();
-		current.className = elements[gun];
-		current.innerHTML = elements[gun];
-		es = eTypes[elements[gun]];
+		current.className = $.elements[gun];
+		current.innerHTML = $.elements[gun];
+		$.es = eTypes[$.elements[gun]];
 		repaint();
 	}
 	function initCharacters(){
-		cursor = new Cursor();
-		hero = new Hero(canvas.width, canvas.height);
-		explosion = new Explosion();
-		eh = new Element();
-		background = new Bg(55,25);
+		cursor = new $.Cursor();
+		hero = new $.Hero(canvas.width, canvas.height);
+		explosion = new $.Explosion();
+		eh = new $.Element();
+		background = new $.Bg(55,25);
 		eTypes = eh.types;
 		generateEnemy();
 	}
@@ -51,7 +50,7 @@ Game = function(){
 			ctx.drawImage(cursor.getImage(), cursor.x, cursor.y);
 			paintBullets();
 			clearBullets();
-			if((++counter % 30) == 0){
+			if((++counter % 30) === 0){
 				generateEnemy();
 				levelSpeed+=0.1;
 			}
@@ -62,14 +61,15 @@ Game = function(){
 		setTimeout(repaint, fps);
 	}
 	function paintHero(){
+		var keys = keyEventListener.getKeys();
 		hero.move(keys,function(keys){
 			background.move(keys);
 			persuit();
 		});
-		new HeroDrawable(hero).draw(ctx);
+		new $.HeroDrawable(hero).draw(ctx);
 	}
 	function paintBg(){
-	    new BgDrawable(background).draw(ctxBg,canvas.width,canvas.height);
+	    new $.BgDrawable(background).draw(ctxBg,canvas.width,canvas.height);
 	}
 	function gameOverAction(){
 		gameOver = 1;
@@ -98,7 +98,7 @@ Game = function(){
 		}
 	}
 	function generateEnemy(){
-		var enemy = new Enemy({
+		var enemy = new $.Enemy({
 			origin : {x : Math.floor(Math.random() * (canvas.width)), 
 					  y : Math.floor(Math.random() * (canvas.height - canvas.height / 4))
 			},
@@ -130,14 +130,14 @@ Game = function(){
 						enemy.health-=1;
 						enemy.width-=1;
 		    				enemy.height-=1;
-		    				SoundsFactory.play('hurt');
+		    				$.SoundsFactory.play('hurt');
 					}else{
 						enemies.splice(r.i , 1);
 						explosion.x = enemy.x;
 						explosion.y = enemy.y;
 						explosion.color = enemy.color;
 						explosion.isExploting = 1;
-						SoundsFactory.play('explote');
+						$.SoundsFactory.play('explote');
 			    	}
 			    }else if(hero.bullets[i].element.name === enemy.element.name){
 			    		enemy.speed += 0.1;
@@ -146,7 +146,7 @@ Game = function(){
 			    			enemy.width+=1;
 			    			enemy.height+=1;
 			    		}
-			    		SoundsFactory.play('powerup');
+			    		$.SoundsFactory.play('powerup');
 			    	}
 			    	hero.bullets.splice(i,1);
 		    	}
@@ -183,7 +183,7 @@ Game = function(){
 			    		currentEnemy.width+=1;
 			   		currentEnemy.height+=1;
 			   		}
-			   		SoundsFactory.play('powerup');
+			   		$.SoundsFactory.play('powerup');
 			   		enemies.splice(i,1);
 				}else{
 					currentEnemy.isInCollision = 1;
@@ -217,43 +217,27 @@ Game = function(){
 		return ((s.x > (canvas.width - s.width/2) || (s.x - s.width / 2) < 0) || (s.y > (canvas.height - s.height / 2) || (s.y - s.height / 2) < 0));
 	}
 	function bindEvents(){
-		addEvent(document,'keyup',onKeyUp);
-		addEvent(document,'keydown',onKeyDown);
-		addEvent(canvas,'mousemove', onMouseMove);
-		addEvent(canvas,'mousedown', onMouseClick);
-		addEvent(document,'contextmenu',function(e){e.preventDefault();});
+		keyEventListener = new $.KeyEventListener({element : document});
+		mouseEventListener = new $.MouseEventListener({
+			element : canvas,
+			onMouseMove : onMouseMove,
+			onClick : onMouseClick
+		});
 	}
-	function onMouseMove(e){
-		var x = getFixedX(e), 
-			y = getFixedY(e);
+	function onMouseMove(x,y){
 		cursor.move({ x : x , y : y});
 		hero.angle = hero.calculateAngle(x,y);
 		persuit();
 	}
-	function persuit(){
-		for (var i = 0; i < enemies.length; i++) {
-			enemyPersuitHero(enemies[i]);
-		};
-	}
-	function enemyPersuitHero(e){
-		if(!e.isInCollision){
-			e.calculateDirection({
-				target : { x : hero.x , y : hero.y}
-			});
-		}
-	}
-	function onMouseClick(e){
-		var x = getFixedX(e), 
-			y = getFixedY(e),
-			gunName;
-		if(e.button){
-			if(++gun == elements.length){
+	function onMouseClick(x,y,button){
+		var gunName;
+		if(button){
+			if(++gun == $.elements.length){
 				gun=0;
 			}
-			gunName = elements[gun];
-			es = eTypes[gunName];
-			current.innerHTML = gunName;
-			current.className = gunName;
+			gunName = $.elements[gun];
+			$.es = eTypes[gunName];
+			$.attr(current,{'innerHTML':gunName,'className':gunName });
 			return false;
 		}
 		if(!gameOver){
@@ -263,23 +247,17 @@ Game = function(){
 			initCharacters();
 		}
 	}
-	function onKeyDown(e){
-		keys[e.keyCode] = 1;
+	function persuit(){
+		for (var i = 0; i < enemies.length; i++) {
+			enemyPersuitHero(enemies[i]);
+		}
 	}
-	function onKeyUp(e){
-		keys[e.keyCode] = 0;
-	}
-	function getFixedX(e){
-		return e.clientX - canvas.offsetLeft;
-	}
-	function getFixedY(e){
-		return e.clientY - canvas.offsetTop;
-	}
-	function get(id){
-		return document.getElementById(id);
-	}
-	function addEvent(e,name,fn){
-		e.addEventListener(name,fn,false);
+	function enemyPersuitHero(e){
+		if(!e.isInCollision){
+			e.calculateDirection({
+				target : { x : hero.x , y : hero.y}
+			});
+		}
 	}
 	init();
 };

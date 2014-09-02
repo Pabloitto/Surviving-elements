@@ -1,4 +1,4 @@
-Explosion = (function(shape){
+$.Explosion = (function(shape){
 	function Explosion(){
 		this.x = 0;
 		this.y = 0;
@@ -9,13 +9,13 @@ Explosion = (function(shape){
 	Explosion.prototype.explote = function(){
 		if(this.isExploting){
 			for(var k = 0; k < this.length; k++) {
-				this.particles.push(new Particle(this.x,this.y));
+				this.particles.push(new $.Particle(this.x,this.y));
 			}
 		}
 	};
 	return Explosion;
-})(Shape);
-Particle= (function(shape){
+})($.Shape);
+$.Particle= (function(shape){
 	var moveBy = 10;
 	function Particle(cX,cY){
 		this.x = cX;
@@ -31,4 +31,4 @@ Particle= (function(shape){
 		this.radius = Math.max(this.radius - 0.05, 0.0); 
 	}
 	return Particle;
-})(Shape);
+})($.Shape);

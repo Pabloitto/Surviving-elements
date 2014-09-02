@@ -1,19 +1,19 @@
-KeyEventListener=function(e){
-    var KEY_CODES = {
+$.KEY_CODES = {
         UP : 38,
         DOWN : 40,
         LEFT: 37,
         RIGHT:39
-    },
-    keys = [];
+};
+$.KeyEventListener=function(o){
+    var keys = [];
     
     function init(){
         bindEvents();
     }
     
     function bindEvents(){
-        e.addEventListener('keyup',onKeyUp,false);
-        e.addEventListener('keydown',onKeyDown,false);
+        o.element.addEventListener('keyup',onKeyUp,false);
+        o.element.addEventListener('keydown',onKeyDown,false);
     }
     
     function onKeyDown(e){
@@ -29,7 +29,6 @@ KeyEventListener=function(e){
     init();
     
     return {
-        KEY_CODES : KEY_CODES,
         getKeys : getKeys
     };
 };

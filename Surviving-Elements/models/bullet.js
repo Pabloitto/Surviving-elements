@@ -1,4 +1,4 @@
-Bullet = (function (shape) {
+$.Bullet = (function (shape) {
 	var that = null,
 		vectors = null;
 
@@ -9,11 +9,11 @@ Bullet = (function (shape) {
 		that.x = vectors.origin.x;
 		that.y = vectors.origin.y;
 		that.size = 3;
-		this.element = es;
+		this.element = $.es;
 		this.color = this.element.color;
 		this.calculateDirection(vectors);
 	}
 	Bullet.prototype = Object.create(shape.prototype);
 	return Bullet;
 
-})(Shape);
+})($.Shape);

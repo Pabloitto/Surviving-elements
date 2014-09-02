@@ -1,4 +1,4 @@
-MouseEventListener=function(o){
+$.MouseEventListener=function(o){
     function init(){
         bindEvents();
     }
@@ -6,7 +6,7 @@ MouseEventListener=function(o){
     function bindEvents(){
         o.element.addEventListener('mousemove',onMouseMove,false);
         o.element.addEventListener('mousedown',onMouseClick,false);
-        o.element.addEventListener('contextmenu',onOpenContext,false);
+        document.addEventListener('contextmenu',onOpenContext,false);
     }
     function onMouseMove(e){
 		var x = getFixedX(e), 

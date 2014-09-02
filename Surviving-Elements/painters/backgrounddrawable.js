@@ -1,4 +1,4 @@
-BgDrawable = function(bg){
+$.BgDrawable = function(bg){
     var background;
     function init(){
         background = bg;

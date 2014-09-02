@@ -1,9 +1,9 @@
-Enemy = (function(shape){
+$.Enemy = (function(shape){
 	function Enemy(v){
 		this.vectors = v;
 		this.x = this.vectors.origin.x;
 		this.y = this.vectors.origin.y;
-		this.element = new Element().getRandomElement();
+		this.element = new $.Element().getRandomElement();
 		this.color = this.element.color;
 		this.width = 20;
 		this.height = 20;
@@ -26,4 +26,4 @@ Enemy = (function(shape){
 		return this.health > 0;
 	}
 	return Enemy;
-})(Shape);
+})($.Shape);

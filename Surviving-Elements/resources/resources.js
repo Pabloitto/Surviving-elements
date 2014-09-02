@@ -1,4 +1,4 @@
-ImageFactory=(function(){
+$.ImageFactory=(function(){
     var path = 'resources/img/',
         ext = '.png',
         loaded={};
@@ -19,7 +19,7 @@ ImageFactory=(function(){
         getImg : getImg
     }
 }())
-SoundsFactory=(function(){
+$.SoundsFactory=(function(){
     var path = 'resources/sounds/',
         ext = '.wav',
         loaded = {};

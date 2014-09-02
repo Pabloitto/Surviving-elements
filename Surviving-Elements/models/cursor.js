@@ -1,4 +1,4 @@
-Cursor = (function (shape) {
+$.Cursor = (function (shape) {
 	function Cursor() {
 		this.color = '#614126';
 	}
@@ -8,7 +8,7 @@ Cursor = (function (shape) {
 		this.y = e.y;
 	};
 	Cursor.prototype.getImage = function(){
-		return ImageFactory.getImg('pointer');
+		return $.ImageFactory.getImg('pointer');
 	};
 	return Cursor;
-})(Shape);
+})($.Shape);

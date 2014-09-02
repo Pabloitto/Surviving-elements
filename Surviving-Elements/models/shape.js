@@ -1,4 +1,4 @@
-Shape = (function () {
+$.Shape = (function () {
 	function Shape() {}
 	Shape.prototype.speed = 1;
 	Shape.prototype.x = 10;

@@ -1,4 +1,4 @@
-HeroDrawable = function(h){
+$.HeroDrawable = function(h){
     var hero;
     function init(){
         hero = h;
