@@ -5,17 +5,17 @@ Enemy = (function(shape){
 		this.y = this.vectors.origin.y;
 		this.element = new Element().getRandomElement();
 		this.color = this.element.color;
-		this.width = 16;
-		this.height = 16;
+		this.width = 20;
+		this.height = 20;
 		this.health = 0;
-		this.speed = 1;
+		this.speed = 1.5;
 		this.calculateDirection(this.vectors);
 		this.id = this.generateId();
 		this.isInCollision = 0;
 	}
 	Enemy.prototype = Object.create(shape.prototype);
 	Enemy.prototype.move = function(oposite){
-		if(oposite){
+		if(this.isInCollision && oposite){
 			this.vx = -this.vx;
 			this.vy = -this.vy;
 		}

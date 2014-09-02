@@ -1,8 +1,7 @@
 Element = function(){
 	return {
 		getRandomElement : function(){
-			var elements = ['Water','Fire','Ground','Wind'],
-				r = Math.floor(Math.random()*(elements.length - 1));
+			var	r = Math.floor(Math.random()*(elements.length)),
 				e = elements[r];
 			return this.types[e];
 		},
@@ -21,7 +20,7 @@ Element = function(){
 			},
 			Wind :{
 				name : 'Wind',
-				color : '#CCFFFF'
+				color : '#00FF00'
 			}
 		},
 		getWinner:function(e1,e2){

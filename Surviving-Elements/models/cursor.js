@@ -8,9 +8,7 @@ Cursor = (function (shape) {
 		this.y = e.y;
 	};
 	Cursor.prototype.getImage = function(){
-		var i = new Image();
-		i.src = 'pointer.png';
-		return i;
+		return ImageFactory.getImg('pointer');
 	};
 	return Cursor;
 })(Shape);

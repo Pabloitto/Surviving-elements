@@ -5,10 +5,10 @@ Bullet = (function (shape) {
 	function Bullet(v) {
 		that = this;
 		vectors = v;
-		that.speed = 25;
+		that.speed = 50;
 		that.x = vectors.origin.x;
 		that.y = vectors.origin.y;
-		that.size = 5;
+		that.size = 3;
 		this.element = es;
 		this.color = this.element.color;
 		this.calculateDirection(vectors);

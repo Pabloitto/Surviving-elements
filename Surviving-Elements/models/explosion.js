@@ -3,7 +3,7 @@ Explosion = (function(shape){
 		this.x = 0;
 		this.y = 0;
 		this.particles = [];
-		this.length = 30;
+		this.length = 40;
 		this.isExploting = 0;
 	}
 	Explosion.prototype.explote = function(){
@@ -16,11 +16,11 @@ Explosion = (function(shape){
 	return Explosion;
 })(Shape);
 Particle= (function(shape){
-	var moveBy = 8;
+	var moveBy = 10;
 	function Particle(cX,cY){
 		this.x = cX;
 		this.y = cY;
-		this.radius = 2.0;
+		this.radius = 1.0;
 		this.vx = (-this.radius * (moveBy / 2)) + Math.random() * moveBy;
 		this.vy = Math.random() * moveBy;
 	}
