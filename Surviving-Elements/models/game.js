@@ -55,7 +55,7 @@ $.Game = function(){
 				levelSpeed+=0.1;
 			}
 			explosion.explote();
-			emitExplosion();
+			paintExplosion();
 			explosion.isExploting = 0;
 		}
 		setTimeout(repaint, fps);
@@ -115,11 +115,10 @@ $.Game = function(){
 			hero.underFire = 0;
 		}
 		for (var i = 0; i < hero.bullets.length; i++) {
-			var r = intersectBulletWithEnemy(hero.bullets[i]),
+			var r = $.intersectWithArray(hero.bullets[i],enemies),
 				enemy = r.e;
 			if(!enemy){
-			    hero.bullets[i].x += hero.bullets[i].vx;
-			    hero.bullets[i].y += hero.bullets[i].vy;
+			    hero.bullets[i].move();
 			    ctx.fillStyle = hero.bullets[i].color;
 			    ctx.arc(hero.bullets[i].x,hero.bullets[i].y,hero.bullets[i].size,0,Math.PI*2,true);
 			    ctx.closePath();
@@ -153,25 +152,11 @@ $.Game = function(){
 	    };
 	    ctx.fill();
 	}
-	function intersect(a,b){
-		 return (Math.abs(a.x - b.x) < (a.width + b.width) / 2) &&
-     			(Math.abs(a.y - b.y) < (a.height + b.height) / 2);
-	}
-	function intersectBulletWithEnemy(bullet){
-		var r = 0;
-		for (var i = 0; i < enemies.length; i++) {
-			if(intersect(bullet,enemies[i])){
-				r = {e : enemies[i] , i : i};
-				break;
-			}
-		};
-		return r;
-	}
 	function intersectEnemyWithEnemy(currentEnemy){
 		var r = 0;
 		for (var i = 0; i < enemies.length; i++) {
 			if(currentEnemy.id != enemies[i].id && 
-				(intersect(currentEnemy,enemies[i]))){
+				($.intersect(currentEnemy,enemies[i]))){
 				if(currentEnemy.element.name === enemies[i].element.name){
 					currentEnemy.speed += 0.1;
 			    		currentEnemy.health += 1;
@@ -194,7 +179,7 @@ $.Game = function(){
 		};
 		return r;
 	}
-	function emitExplosion() { 
+	function paintExplosion() { 
 		for(var i = 0; i < explosion.particles.length; i++) {
 			var current = explosion.particles[i];
 			ctx.beginPath(); 
@@ -202,8 +187,8 @@ $.Game = function(){
 			if (current.radius > 0) {
 				ctx.arc(current.x, current.y, current.radius, 0, Math.PI*2, false);
 			}
-			current.move();
 			ctx.fill();
+			current.move();
 		} 
 	}
 	function clearBullets(){
