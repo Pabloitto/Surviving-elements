@@ -43,12 +43,11 @@ $.Game = function(){
 	}
 	function repaint(){
 		if(!gameOver){
-			paintBg();
 			paintHero();
 			paintEnemy();
-			ctx.drawImage(cursor.getImage(), cursor.x, cursor.y);
 			paintBullets();
 			clearBullets();
+			ctx.drawImage(cursor.getImage(), cursor.x, cursor.y);
 			if((++counter % 30) === 0){
 				generateEnemy();
 				levelSpeed+=0.1;
@@ -56,7 +55,10 @@ $.Game = function(){
 			explosion.explote();
 			paintExplosion();
 			explosion.isExploting = 0;
+		}else{
+			gameOverAction();
 		}
+		paintBg();
 		setTimeout(repaint, fps);
 	}
 	function paintHero(){
@@ -65,18 +67,25 @@ $.Game = function(){
 			background.move(keys);
 			persuit();
 		});
+		if($.intersectWithArray(hero,enemies)){
+			if(hero.isAlive()){
+				hero.health-=0.1;
+			}else{
+				gameOver = 1;
+			}
+		}
 		$.HeroDrawable(hero).draw(ctx);
+		$.EnergyBarDrawable(hero.energybar).draw(ctx , hero.health);
 	}
 	function paintBg(){
 	    $.BgDrawable(background).draw(ctxBg,canvas.width,canvas.height);
 	}
 	function gameOverAction(){
-		gameOver = 1;
 		enemies = [];
 		hero.bullets = [];
-		ctx.fillRect(0, 0, canvas.width, canvas.height);
+		levelSpeed = 0.1;
 		ctx.font = "30px Arial";
-		ctx.strokeText("Game Over Press to Continue",10,50);
+		ctx.strokeText("Game Over Press to Continue",canvas.width / 2,canvas.height / 2);
 	}
 	function paintEnemy(){
 		var crash;
@@ -94,6 +103,11 @@ $.Game = function(){
 			}
 			ctx.closePath();
 			ctx.fill();
+			if(enemies[i].health >= enemies[i].maxHealth){
+				$.EnergyBarDrawable(enemies[i].energybar).draw(ctx , enemies[i].maxHealth);
+			}else{
+				$.EnergyBarDrawable(enemies[i].energybar).draw(ctx , enemies[i].health);
+			}
 		}
 	}
 	function generateEnemy(){
@@ -139,8 +153,8 @@ $.Game = function(){
 			    	}
 			    }else if(hero.bullets[i].element.name === enemy.element.name){
 			    		enemy.speed += 0.1;
-			    		enemy.health += 1;
-			    		if(enemy.width < (hero.width * 2)){
+			    		if(enemy.health < enemy.maxHealth){
+			    			enemy.health += 1;
 			    			enemy.width+=1;
 			    			enemy.height+=1;
 			    		}
@@ -158,8 +172,9 @@ $.Game = function(){
 				($.intersect(currentEnemy,enemies[i]))){
 				if(currentEnemy.element.name === enemies[i].element.name){
 					currentEnemy.speed += 0.1;
-			    	currentEnemy.health += 1;
-			    	if(currentEnemy.width < (hero.width * 2)){
+			    	
+			    	if(currentEnemy.health < currentEnemy.maxHealth){
+			    		currentEnemy.health += 1;
 				    	if(currentEnemy.width < enemies[i].width){
 				    		currentEnemy.width = enemies[i].width;
 				    		currentEnemy.height = enemies[i].height;

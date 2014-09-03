@@ -10,6 +10,7 @@ $.Hero = (function (shape) {
 		this.underFire = 0;
 		this.cH=pY;
 		this.cW=pX;
+		this.energybar = new $.EnergyBar(this);
 	}
 	Hero.prototype = Object.create(shape.prototype);
 	Hero.prototype.shot = function(e){
@@ -66,6 +67,7 @@ $.Hero = (function (shape) {
 	    }else{
 	    	cb(k);
 	    }
+	    this.energybar.move(this);
 	};
 	Hero.prototype.isAlive = function(){
 		return this.health > 0;
@@ -74,4 +76,19 @@ $.Hero = (function (shape) {
 		this.frame = this.frame <= 2 ? this.frame + 1 : 1;
 	}
 	return Hero;
+})($.Shape);
+$.EnergyBar = (function (shape) {
+	function EnergyBar(model) {
+		this.x = model.x;
+		this.y = model.y - (this.height * 4);
+		this.width = (model.health) * 10;
+		this.height = 5;
+		this.color = "red";
+	}
+	EnergyBar.prototype = Object.create(shape.prototype);
+	EnergyBar.prototype.move = function(model){
+		this.x = model.x;
+		this.y = model.y - (this.height * 4);
+	};
+	return EnergyBar;
 })($.Shape);

@@ -8,10 +8,12 @@ $.Enemy = (function(shape){
 		this.width = 20;
 		this.height = 20;
 		this.health = 0;
-		this.speed = 1.5;
+		this.speed = 1;
+		this.maxHealth = 5;
 		this.calculateDirection(this.vectors);
 		this.id = this.generateId();
 		this.isInCollision = 0;
+		this.energybar = new $.EnergyBar(this);
 	}
 	Enemy.prototype = Object.create(shape.prototype);
 	Enemy.prototype.move = function(oposite){
@@ -21,6 +23,7 @@ $.Enemy = (function(shape){
 		}
 		this.x += this.vx;
 		this.y += this.vy;
+		this.energybar.move(this);
 	}
 	Enemy.prototype.isAlive = function(){
 		return this.health > 0;
