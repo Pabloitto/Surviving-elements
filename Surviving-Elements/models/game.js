@@ -20,6 +20,7 @@ $.Game = function(){
 		elementHelper;
 
 	function init(){
+		$.SoundsFactory.play('music',true);
 		canvas.width = 1200;
         	canvas.height = 400;
         	initCharacters();
@@ -81,11 +82,12 @@ $.Game = function(){
 	    $.BgDrawable(background).draw(ctxBg,canvas.width,canvas.height);
 	}
 	function gameOverAction(){
+		$.SoundsFactory.stop('music');
 		enemies = [];
 		hero.bullets = [];
 		levelSpeed = 0.1;
 		ctx.font = "30px Arial";
-		ctx.strokeText("Game Over Press to Continue",canvas.width / 2,canvas.height / 2);
+		ctx.strokeText("Press R to try again",canvas.width / 2,canvas.height / 2);
 	}
 	function paintEnemy(){
 		var crash;
@@ -216,12 +218,22 @@ $.Game = function(){
 		return ((s.x > (canvas.width - s.width/2) || (s.x - s.width / 2) < 0) || (s.y > (canvas.height - s.height / 2) || (s.y - s.height / 2) < 0));
 	}
 	function bindEvents(){
-		keyEventListener = new $.KeyEventListener({element : document});
+		keyEventListener = new $.KeyEventListener({
+			element : document,
+		 	keyPress : restartGame
+		});
 		mouseEventListener = new $.MouseEventListener({
 			element : canvas,
 			onMouseMove : onMouseMove,
 			onClick : onMouseClick
 		});
+	}
+	function restartGame(){
+		if(gameOver){
+			gameOver = 0;
+			initCharacters();
+			$.SoundsFactory.play('music',true);
+		}
 	}
 	function onMouseMove(x,y){
 		cursor.move({ x : x , y : y});
@@ -241,9 +253,6 @@ $.Game = function(){
 		}
 		if(!gameOver){
 			hero.shot({ x : x , y : y});
-		}else{
-			gameOver = 0;
-			initCharacters();
 		}
 	}
 	function persuit(){
