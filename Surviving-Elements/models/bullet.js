@@ -5,7 +5,7 @@ $.Bullet = (function (shape) {
 		this.speed = 50;
 		this.x = vectors.origin.x;
 		this.y = vectors.origin.y;
-		this.size = 3;
+		this.size = 4;
 		this.element = $.es;
 		this.color = this.element.color;
 		this.calculateDirection(vectors);
