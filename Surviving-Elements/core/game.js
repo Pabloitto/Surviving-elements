@@ -133,37 +133,24 @@ $.Game = function(){
 			var r = $.intersectWithArray(hero.bullets[i],enemies),
 				enemy = r.e;
 			if(!enemy){
-			    hero.bullets[i].move();
-			    ctx.fillStyle = hero.bullets[i].color;
-			    ctx.arc(hero.bullets[i].x,hero.bullets[i].y,hero.bullets[i].size,0,$.PI2,true);
-			    ctx.closePath();
+			    $.BulletDrawable(hero.bullets[i]).draw(ctx);
 		   	}else{
-		   		var winner = elementHelper.getWinner(hero.bullets[i],enemy);
-				if(winner){
+		   		var isBulletWinner = elementHelper.getWinner(hero.bullets[i],enemy);
+				if(isBulletWinner){
 					if(enemy.isAlive()){
-						enemy.health-=1;
-						enemy.width-=1;
-		    			enemy.height-=1;
+						enemy.hurt();
 		    			$.SoundsFactory.play('hurt');
 					}else{
 						enemies.splice(r.i , 1);
-						explosion.x = enemy.x;
-						explosion.y = enemy.y;
-						explosion.color = enemy.color;
-						explosion.isExploting = 1;
+						explosion.create(enemy.x,enemy.y,enemy.color);
 						$.SoundsFactory.play('explote');
 			    	}
 			    }else if(hero.bullets[i].element.name === enemy.element.name){
-			    		enemy.speed += 0.1;
-			    		if(enemy.health < enemy.maxHealth){
-			    			enemy.health += 1;
-			    			enemy.width+=1;
-			    			enemy.height+=1;
-			    		}
+			    		enemy.powerup();
 			    		$.SoundsFactory.play('powerup');
-			    	}
-			    	hero.bullets.splice(i,1);
-		    	}
+			    }
+				hero.bullets.splice(i,1);
+		    }
 	    }
 	    ctx.fill();
 	}
@@ -173,17 +160,7 @@ $.Game = function(){
 			if(currentEnemy.id != enemies[i].id && 
 				($.intersect(currentEnemy,enemies[i]))){
 				if(currentEnemy.element.name === enemies[i].element.name){
-					currentEnemy.speed += 0.1;
-			    	
-			    	if(currentEnemy.health < currentEnemy.maxHealth){
-			    		currentEnemy.health += 1;
-				    	if(currentEnemy.width < enemies[i].width){
-				    		currentEnemy.width = enemies[i].width;
-				    		currentEnemy.height = enemies[i].height;
-				    	}
-			    		currentEnemy.width+=1;
-			   			currentEnemy.height+=1;
-			   		}
+					currentEnemy.powerup(enemies[i]);
 			   		$.SoundsFactory.play('powerup');
 			   		enemies.splice(i,1);
 				}else{
@@ -196,16 +173,7 @@ $.Game = function(){
 		return r;
 	}
 	function paintExplosion() { 
-		for(var i = 0; i < explosion.particles.length; i++) {
-			var current = explosion.particles[i];
-			ctx.beginPath(); 
-			ctx.fillStyle = explosion.color;
-			if (current.radius > 0) {
-				ctx.arc(current.x, current.y, current.radius, 0, $.PI2, false);
-			}
-			ctx.fill();
-			current.move();
-		} 
+		$.ExplosionDrawable(explosion).draw(ctx);
 	}
 	function clearBullets(){
 		for (var i = 0; i < hero.bullets.length; i++) {

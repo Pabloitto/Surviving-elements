@@ -5,13 +5,13 @@ $.EnergyBarDrawable = function(b){
     }
     function draw(ctx,life){
         ctx.beginPath();
-        ctx.strokeStyle = 'black';
+        ctx.strokeStyle = bar.strokeColor;
         ctx.rect(bar.x,bar.y,bar.width,bar.height);
         ctx.stroke();
         ctx.closePath();
         
         ctx.beginPath();
-        ctx.fillStyle = 'red';
+        ctx.fillStyle = bar.fillColor;
         ctx.fillRect(bar.x,bar.y,(life || 1) * 10 ,bar.height);
         ctx.closePath();
     }

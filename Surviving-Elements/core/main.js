@@ -1,4 +1,4 @@
-$ = {};
+window.$ = {};
 $.es = '';
 $.elements= ['Water','Ground','Fire','Wind'];
 $.PI2 = Math.PI * 2;
