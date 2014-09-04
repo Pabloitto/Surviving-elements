@@ -2,6 +2,8 @@ $.Game = function(){
 	var canvas = $.get('canvas'),
 		bg = $.get('bg'),
 		current = $.get('current'),
+		score = $.get('score'),
+		countScore = 0,
 		explosion,
 		eTypes,
 		counter = 0,
@@ -40,6 +42,7 @@ $.Game = function(){
 		elementHelper = new $.Element();
 		background = new $.Bg(55,25);
 		eTypes = elementHelper.types;
+		score.innerHTML = 'Score = 0';
 		generateEnemy();
 	}
 	function repaint(){
@@ -143,6 +146,7 @@ $.Game = function(){
 					}else{
 						enemies.splice(r.i , 1);
 						explosion.create(enemy.x,enemy.y,enemy.color);
+						score.innerHTML = "Score = " + (++countScore * 100);
 						$.SoundsFactory.play('explote');
 			    	}
 			    }else if(hero.bullets[i].element.name === enemy.element.name){
