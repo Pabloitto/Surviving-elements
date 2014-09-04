@@ -140,7 +140,7 @@ $.Game = function(){
 			}
 			ctx.closePath();
 			ctx.fill();
-			if(enemies[i].health >= enemies[i].maxHealth){
+			if(enemies[i] && (enemies[i].health >= enemies[i].maxHealth)){
 				$.EnergyBarDrawable(enemies[i].energybar).draw(ctx , enemies[i].maxHealth);
 			}else{
 				$.EnergyBarDrawable(enemies[i].energybar).draw(ctx , enemies[i].health);
