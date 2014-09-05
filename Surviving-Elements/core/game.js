@@ -24,10 +24,10 @@ $.Game = function(){
 	function init(){
 		$.SoundsFactory.play('music',true);
 		canvas.width = 1200;
-        	canvas.height = 400;
-        	initCharacters();
-        	bg.width = canvas.width;
-        	bg.height = canvas.height;
+        canvas.height = 400;
+        initCharacters();
+        bg.width = canvas.width;
+        bg.height = canvas.height;
 		ctx = canvas.getContext('2d');
 		ctxBg = bg.getContext('2d');
 		bindEvents();
