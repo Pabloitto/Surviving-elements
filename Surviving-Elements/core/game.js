@@ -3,7 +3,6 @@ $.Game = function(){
 		bg = $.get('bg'),
 		current = $.get('current'),
 		score = $.get('score'),
-		txtName = $.get('txtName'),
 		countScore = 0,
 		explosion,
 		eTypes,
@@ -20,8 +19,7 @@ $.Game = function(){
 		gameOver = 0,
 		levelSpeed=0.1,
 		gun=0,
-		elementHelper,
-		sendScore = 0;
+		elementHelper;
 
 	function init(){
 		$.SoundsFactory.play('music',true);
@@ -38,22 +36,6 @@ $.Game = function(){
 		repaint();
 	}
 	function initCharacters(){
-		/*$.openRequest(function(responseData){
-			var bestScores = $.get('bestScores'),
-				html = '<table border="1" cellspacing="1" cellpadding="5">';
-			for (var i = 0; i < responseData.length; i++) {
-				html += '<tr>';
-				html+='<td>' + responseData[i].name + '</td>';
-				html+='<td>' + responseData[i].score + '</td>';
-   				html+='</tr>';
-			}
-			html+='</table>';
-			bestScores.innerHTML = html;
-		},{
-			"call" : {
-				"name" : "getscores"
-			}
-		});*/
 		cursor = new $.Cursor();
 		hero = new $.Hero(canvas.width, canvas.height);
 		explosion = new $.Explosion();
@@ -79,20 +61,6 @@ $.Game = function(){
 			explosion.isExploting = 0;
 		}else{
 			gameOverAction();
-			/*if(!sendScore){
-				if(countScore > 0){
-					$.openRequest(function(responseData){
-			        	//alert(responseData.result);
-			    	},{
-			    		"call" : {
-			    			"name" : "setscores",
-			    			"score" : countScore * 100,
-			    			"player" : txtName.value
-			    		}
-			    	});
-			    	sendScore= 1;
-				}
-			}*/
 		}
 		paintBg();
 		setTimeout(repaint, fps);
