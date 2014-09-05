@@ -87,6 +87,7 @@ $.Game = function(){
 	function gameOverAction(){
 		$.SoundsFactory.stop('music');
 		enemies = [];
+		counter=0;
 		hero.bullets = [];
 		levelSpeed = 0.1;
 		ctx.font = "30px Arial";
@@ -95,9 +96,6 @@ $.Game = function(){
 	function paintEnemy(){
 		var crash;
 		for (var i = 0; i < enemies.length; i++) {
-			//ctx.beginPath();
-			//ctx.fillStyle = enemies[i].color;
-			//ctx.rect(enemies[i].x,enemies[i].y,enemies[i].width,enemies[i].height);
 			ctx.drawImage(enemies[i].image,enemies[i].x,enemies[i].y);
 			if(isNotInCanvas(enemies[i])){
 				enemies[i].isInCollision = 0;
@@ -107,8 +105,6 @@ $.Game = function(){
 			if(enemies[i]){
 				enemies[i].move(crash);
 			}
-			//ctx.closePath();
-			//ctx.fill();
 			if(enemies[i]){
 				if(enemies[i].health >= enemies[i].maxHealth){
 					$.EnergyBarDrawable(enemies[i].energybar).draw(ctx , enemies[i].maxHealth);
