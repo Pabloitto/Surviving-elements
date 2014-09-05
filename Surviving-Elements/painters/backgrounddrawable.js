@@ -20,6 +20,7 @@ $.BgDrawable = function(bg){
 	            ctxBg.drawImage(img, w + background.x, (h + background.y) - background.height);
 	        }
 	    }
+
     }
     init();
     return {

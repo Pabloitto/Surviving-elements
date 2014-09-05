@@ -8,19 +8,23 @@ $.Element = function(){
 		types : {
 			Water : {
 				name : 'Water',
-				color : '#0180CA'
+				color : '#0180CA',
+				image : $.ImageFactory.getImg('water')
 			},
 			Fire : {
 				name : 'Fire',
-				color : '#CA0F01'
+				color : '#CA0F01',
+				image : $.ImageFactory.getImg('fire')
 			},
 			Ground : {
 				name : 'Ground',
-				color : '#655619'
+				color : '#655619',
+				image : $.ImageFactory.getImg('rock')
 			},
 			Wind :{
 				name : 'Wind',
-				color : '#00FF00'
+				color : 'blue',
+				image : $.ImageFactory.getImg('wind')
 			}
 		},
 		getWinner:function(e1,e2){

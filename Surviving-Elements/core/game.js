@@ -40,7 +40,7 @@ $.Game = function(){
 		hero = new $.Hero(canvas.width, canvas.height);
 		explosion = new $.Explosion();
 		elementHelper = new $.Element();
-		background = new $.Bg(55,25);
+		background = new $.Bg(55,22);
 		eTypes = elementHelper.types;
 		score.innerHTML = 'Score = 0';
 		generateEnemy();
@@ -95,9 +95,10 @@ $.Game = function(){
 	function paintEnemy(){
 		var crash;
 		for (var i = 0; i < enemies.length; i++) {
-			ctx.beginPath();
-			ctx.fillStyle = enemies[i].color;
-			ctx.rect(enemies[i].x,enemies[i].y,enemies[i].width,enemies[i].height);
+			//ctx.beginPath();
+			//ctx.fillStyle = enemies[i].color;
+			//ctx.rect(enemies[i].x,enemies[i].y,enemies[i].width,enemies[i].height);
+			ctx.drawImage(enemies[i].image,enemies[i].x,enemies[i].y);
 			if(isNotInCanvas(enemies[i])){
 				enemies[i].isInCollision = 0;
 				enemyPersuitHero(enemies[i]);
@@ -106,12 +107,14 @@ $.Game = function(){
 			if(enemies[i]){
 				enemies[i].move(crash);
 			}
-			ctx.closePath();
-			ctx.fill();
-			if(enemies[i] && (enemies[i].health >= enemies[i].maxHealth)){
-				$.EnergyBarDrawable(enemies[i].energybar).draw(ctx , enemies[i].maxHealth);
-			}else{
-				$.EnergyBarDrawable(enemies[i].energybar).draw(ctx , enemies[i].health);
+			//ctx.closePath();
+			//ctx.fill();
+			if(enemies[i]){
+				if(enemies[i].health >= enemies[i].maxHealth){
+					$.EnergyBarDrawable(enemies[i].energybar).draw(ctx , enemies[i].maxHealth);
+				}else{
+					$.EnergyBarDrawable(enemies[i].energybar).draw(ctx , enemies[i].health);
+				}
 			}
 		}
 	}
