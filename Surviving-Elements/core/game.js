@@ -6,7 +6,7 @@ $.Game = function(){
 		countScore = 0,
 		explosion,
 		eTypes,
-		counter = 0,
+		time = 0,
 		ctx,
 		ctxBg,
 	    fps =  60,
@@ -52,7 +52,7 @@ $.Game = function(){
 			paintBullets();
 			clearBullets();
 			ctx.drawImage(cursor.getImage(), cursor.x, cursor.y);
-			if((++counter % 30) === 0){
+			if((++time % 30) === 0){
 				generateEnemy();
 				levelSpeed+=0.1;
 			}
@@ -87,7 +87,7 @@ $.Game = function(){
 	function gameOverAction(){
 		$.SoundsFactory.stop('music');
 		enemies = [];
-		counter=0;
+		time=0;
 		hero.bullets = [];
 		levelSpeed = 0.1;
 		ctx.font = "30px Arial";
