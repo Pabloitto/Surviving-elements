@@ -24,8 +24,8 @@ $.Hero = (function (shape) {
 			this.bullets.push(bullet);
 		}
 	};
-	Hero.prototype.getImage = function(){
-		return $.ImageFactory.getImg('sprites');
+	Hero.prototype.getSprite = function(){
+		return $.Sprite.getSprite('sprites',{x : !this.frame ? 0 : (this.width * this.frame) , y : 0});
 	};
 	Hero.prototype.move = function(k,cb){
 		if (k[$.KEY_CODES.UP]) {

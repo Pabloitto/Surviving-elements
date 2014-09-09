@@ -19,3 +19,16 @@ $.ImageFactory=(function(){
         getImg : getImg
     }
 }())
+$.Sprite = (function(){
+    function getSprite(name,pos){
+        var image = $.ImageFactory.getImg(name);
+        return {
+            image : image,
+            pos : pos
+        }
+    }
+    
+    return {
+        getSprite : getSprite
+    }
+}())

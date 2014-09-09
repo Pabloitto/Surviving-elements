@@ -2,30 +2,16 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Elements Surviver</title>
+  <title>Surviving Elements</title>
   <link rel="stylesheet" type="text/css" href="css/styles.css">
 </head>
 <body>
-    <table align="center" width="100px">
-      <tr>
-        <td>
-          <div class="fireEnemy"></div>
-        </td>
-        <td>
-          <div class="waterEnemy"></div>
-        </td>
-        <td>
-          <div class="groundEnemy"></div>
-        </td>
-        <td>
-          <div class="windEnemy"></div>
-        </td>
-      </tr>
-    </table>
+  <div align="center" class="spriteElements"></div>
     <div id="divGame">
    		<div class="elements" style="height:100px;">
     		<div id="current"></div>
     		<div id="score"></div>
+    		<div id="time"></div>
      	</div>
         <canvas id="bg"></canvas>
         <canvas id="canvas" style="border:2px solid #000000;"></canvas>
@@ -53,5 +39,6 @@
 <script type="text/javascript" src="painters/explosiondrawable.js"></script>
 <script type="text/javascript" src="painters/bulletdrawable.js"></script>
 <script type="text/javascript" src="painters/energybardrawable.js"></script>
+<script type="text/javascript" src="painters/enemydrawable.js"></script>
 <script type="text/javascript" src="painters/backgrounddrawable.js"></script>
 </html>

@@ -9,22 +9,22 @@ $.Element = function(){
 			Water : {
 				name : 'Water',
 				color : '#0180CA',
-				image : $.ImageFactory.getImg('water')
+				sprite : $.Sprite.getSprite('sprite_elements',{x : 40 , y : 0})
 			},
 			Fire : {
 				name : 'Fire',
 				color : '#CA0F01',
-				image : $.ImageFactory.getImg('fire')
+				sprite : $.Sprite.getSprite('sprite_elements',{x : 0 , y : 0})
 			},
 			Ground : {
 				name : 'Ground',
 				color : '#655619',
-				image : $.ImageFactory.getImg('rock')
+				sprite : $.Sprite.getSprite('sprite_elements',{x : 20 , y : 0})
 			},
 			Wind :{
 				name : 'Wind',
 				color : 'blue',
-				image : $.ImageFactory.getImg('wind')
+				sprite : $.Sprite.getSprite('sprite_elements',{x : 60 , y : 0})
 			}
 		},
 		getWinner:function(e1,e2){

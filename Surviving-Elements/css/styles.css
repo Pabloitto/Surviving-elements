@@ -9,44 +9,19 @@ canvas {
 .Ground{background-color: #655619;}
 .Wind{background-color: #00FF00;}
 .Fire{background-color: #CA0F01;}
-.fireEnemy{
+.spriteElements { 
+	background-image: url('../resources/img/sprite_elements.png'); 
+	background-color: transparent; background-repeat: no-repeat; 
 	height:20px;
-	background-image: url('../resources/img/fire.png');
-	background-size: 20px 20px;
-    background-repeat: no-repeat;
-	
 }
-.waterEnemy{	
-	height:20px;
-	background-image: url('../resources/img/water.png');
-	background-size: 20px 20px;
-    background-repeat: no-repeat;
-	
-}
-.groundEnemy{	
-	height:20px;
-	background-image: url('../resources/img/rock.png');
-	background-size: 20px 20px;
-    background-repeat: no-repeat;
-	
-}
-.windEnemy{	
-	height:20px;
-	background-image: url('../resources/img/wind.png');
-	background-size: 20px 20px;
-    background-repeat: no-repeat;
-	
-}
+.fire { width: 20px; height: 20px; background-position: 0px 0px; }
+.rock { width: 20px; height: 20px; background-position: -20px 0px; }
+.water { width: 20px; height: 20px; background-position: -40px 0px; }
+.wind { width: 20px; height: 20px; background-position: -60px 0px; }
 .center{
 	margin-top:1%;
 	margin-left:10%;
 }
 .elements{
-	text-align: center;
-}
-.rules{
-	position: absolute;
-	height:100%;
-	width:100%;
 	text-align: center;
 }

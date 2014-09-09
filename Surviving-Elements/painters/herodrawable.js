@@ -4,13 +4,14 @@ $.HeroDrawable = function(h){
         hero = h;
     }
     function draw(ctx){
-        var image = hero.getImage();
+        var sprite = hero.getSprite();
 		ctx.save();
 		ctx.clearRect(0, 0, hero.cW, hero.cW);
 		ctx.translate(hero.x, hero.y);
 		ctx.rotate(hero.angle * Math.PI/180);
-		ctx.drawImage(image, !hero.frame ? 0 : (hero.width * hero.frame), 
-				0, 
+		ctx.drawImage(sprite.image, 
+		        sprite.pos.x, 
+				sprite.pos.y, 
 				hero.width,
            		hero.height,
 				-(hero.width/2), 

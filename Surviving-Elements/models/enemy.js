@@ -4,7 +4,7 @@ $.Enemy = (function(shape){
 		this.x = this.vectors.origin.x;
 		this.y = this.vectors.origin.y;
 		this.element = new $.Element().getRandomElement();
-		this.image = this.element.image; 
+		this.sprite = this.element.sprite; 
 		this.color = this.element.color;
 		this.health = 0;
 		this.speed = 1;
@@ -13,6 +13,8 @@ $.Enemy = (function(shape){
 		this.id = this.generateId();
 		this.isInCollision = 0;
 		this.energybar = new $.EnergyBar(this);
+		this.width = 20;
+		this.height = 20;
 	}
 	Enemy.prototype = Object.create(shape.prototype);
 	Enemy.prototype.move = function(oposite){

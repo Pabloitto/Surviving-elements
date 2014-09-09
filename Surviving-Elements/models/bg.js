@@ -4,6 +4,8 @@ $.Bg= (function(shape){
 		this.y = 0;
 		this.width = w;
 		this.height = h;
+		this.offset_y = 25;
+		this.offset_x = 55;
 		this.spd = 1;
 	}
 	Bg.prototype = Object.create(shape.prototype);
@@ -14,18 +16,8 @@ $.Bg= (function(shape){
 			}
 	    }
 	    if (k[$.KEY_CODES.DOWN]) {
-	    	if(this.y < this.height){
+	    	if(this.y < this.offset_y){
 				this.y += this.spd; 
-			}
-	    }
-	    if (k[$.KEY_CODES.LEFT]) {
-	    	if(this.x < this.width){
-				this.x += this.spd;
-			}
-	    }
-	    if (k[$.KEY_CODES.RIGHT]) {
-	    	if(this.x > 0){
-				this.x -= this.spd;
 			}
 	    }
 	}
