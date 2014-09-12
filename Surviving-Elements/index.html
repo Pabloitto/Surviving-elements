@@ -9,7 +9,9 @@
   <div align="center" class="spriteElements"></div>
     <div id="divGame">
    		<div class="elements" style="height:100px;">
-    		<div id="current"></div>
+    		<div style="height:20px;width:100%;">
+    		  <span id="current"></span><label id="nameElement"></label>
+    		</div>
     		<div id="score"></div>
     		<div id="time"></div>
     		<div id="txtlevel"></div>
@@ -19,6 +21,31 @@
        	<canvas id="progresscanvas" class="progresscanvas"></canvas>
   			<div class="top">Surviving Elements</div>
         <canvas id="canvas" class="maincanvas" style="border:2px solid #000000;"></canvas>
+        <div class="controls">
+          <table>
+            <tr>
+              <td>↑</td><td>UP</td>
+            </tr>
+            <tr>
+              <td>↓</td><td>DOWN</td>
+            </tr>
+            <tr>
+              <td>→</td><td>RIGHT</td>
+            </tr>
+            <tr>
+              <td>←</td><td>LEFT</td>
+            </tr>
+            <tr>
+              <td>Right Click</td><td>Change Gun</td>
+            </tr>
+            <tr>
+              <td>Left Click</td><td>Shoot element bullet</td>
+            </tr>
+            <tr>
+              <td>Mouse Move</td><td>Aim the target</td>
+            </tr>
+          </table>
+        </div>
       </div>
     </div>
 </body>

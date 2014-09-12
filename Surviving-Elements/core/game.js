@@ -2,6 +2,7 @@ $.Game = function(){
 	var canvas = $.get('canvas'),
 		progresscanvas =  $.get('progresscanvas'),
 		current = $.get('current'),
+		nameElement = $.get('nameElement'),
 		score = $.get('score'),
 		time = $.get('time'),
 		txtlevel = $.get('txtlevel'),
@@ -21,6 +22,7 @@ $.Game = function(){
 		keyEventListener,
 		mouseEventListener,
 		gameOver = 0,
+		started = 0,
 		levelSpeed=0.1,
 		gun=0,
 		elementHelper,
@@ -36,7 +38,8 @@ $.Game = function(){
 		ctx = canvas.getContext('2d');
 		pbCtx = progresscanvas.getContext('2d');
 		bindEvents();
-		$.attr(current,{'innerHTML':$.elements[gun],'className':$.elements[gun] });
+		current.className = $.elements[gun];
+		nameElement.innerHTML = $.elements[gun];
 		$.es = eTypes[$.elements[gun]];
 		repaint();
 	}
@@ -52,23 +55,27 @@ $.Game = function(){
 		time.innerHTML = "Seconds : " + seconds;
 		txtlevel.innerHTML = 'Level : ' + level;
 		txtenemies.innerHTML = 'Enemies : ' + getEnemiesInLevel();
-		setTime();
 		generateEnemy();
 	}
 	function repaint(){
-		if(!gameOver){
-			paintBg();
-			paintPb();
-			paintHero();
-			paintEnemy();
-			paintBullets();
-			clearBullets();
-			ctx.drawImage(cursor.getImage(), cursor.x, cursor.y);
-			explosion.explote();
-			paintExplosion();
-			explosion.isExploting = 0;
+		paintBg();
+		paintPb();
+		if(started){
+			if(!gameOver){
+				paintHero();
+				paintEnemy();
+				paintBullets();
+				clearBullets();
+				ctx.drawImage(cursor.getImage(), cursor.x, cursor.y);
+				explosion.explote();
+				paintExplosion();
+				explosion.isExploting = 0;
+			}else{
+				gameOverAction();
+			}
 		}else{
-			gameOverAction();
+			ctx.font = "30px Arial";
+			ctx.strokeText("Press Enter to start",(canvas.width + 250) / 3,canvas.height / 2);
 		}
 		setTimeout(repaint, fps);
 	}
@@ -104,7 +111,7 @@ $.Game = function(){
 		seconds = 1;
 		countScore = 0;
 		ctx.font = "30px Arial";
-		ctx.strokeText("Press R to try again",canvas.width / 2,canvas.height / 2);
+		ctx.strokeText("Press R to try again",(canvas.width + 250) / 3,canvas.height / 2);
 	}
 	function paintEnemy(){
 		var crash, energyDrawable;
@@ -207,7 +214,8 @@ $.Game = function(){
 	function bindEvents(){
 		keyEventListener = new $.KeyEventListener({
 			element : document,
-		 	keyPress : restartGame
+		 	restart : restartGame,
+		 	start : startGame
 		});
 		mouseEventListener = new $.MouseEventListener({
 			element : canvas,
@@ -219,6 +227,12 @@ $.Game = function(){
 		if(gameOver){
 			gameOver = 0;
 			initCharacters();
+		}
+	}
+	function startGame(){
+		if(!started && !gameOver){
+			started = 1;
+			setTime();
 		}
 	}
 	function onMouseMove(x,y){
@@ -234,7 +248,8 @@ $.Game = function(){
 			}
 			gunName = $.elements[gun];
 			$.es = eTypes[gunName];
-			$.attr(current,{'innerHTML':gunName,'className':gunName });
+			current.className = gunName;
+			nameElement.innerHTML = gunName;
 			return false;
 		}
 		if(!gameOver){
@@ -254,13 +269,15 @@ $.Game = function(){
 		}
 	}
 	function setTime(){
-		timer = setInterval(function(){
-			++seconds;
-			time.innerHTML = "Seconds : " + seconds;
-			if((seconds % generateEnemiesEach) === 0){
-				levelSpeed+=0.1;
-			}
-		},1000);
+		if(started){
+			timer = setInterval(function(){
+				++seconds;
+				time.innerHTML = "Seconds : " + seconds;
+				if((seconds % generateEnemiesEach) === 0){
+					levelSpeed+=0.1;
+				}
+			},1000);
+		}
 	}
 	function getEnemiesInLevel(){
 		return level * 3 - 1;

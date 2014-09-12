@@ -2,10 +2,26 @@ canvas {cursor: none;}
 body{
 	background-color:#404040;
 }
-.Water{background-color: #0180CA;}
-.Ground{background-color: #655619;}
-.Wind{background-color: #00FF00;}
-.Fire{background-color: #CA0F01;}
+.Water{
+	background-color: #0180CA;
+	height:10px;
+	width:10px;
+}
+.Ground{
+	background-color: #655619;
+	height:10px;
+	width:10px;
+}
+.Wind{
+	background-color: #00FF00;
+	height:10px;
+	width:10px;
+}
+.Fire{
+	background-color: #CA0F01;
+	height:10px;
+	width:10px;
+}
 .spriteElements { 
 	background-image: url('../resources/img/sprite_elements.png'); 
 	background-color: transparent; background-repeat: no-repeat; 
@@ -43,4 +59,13 @@ body{
 }
 .elements > div{
 	color:white;
+}
+.controls{
+	color:white;
+}
+#current{
+	display: inline-block;
+}
+#nameElement{
+	padding-left:1%;
 }

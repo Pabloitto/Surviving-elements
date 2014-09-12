@@ -4,7 +4,8 @@ $.KEY_CODES = {
         LEFT: 37,
         RIGHT:39,
         R : 114,
-        r : 82
+        r : 82,
+        ENTER : 13
 };
 $.KeyEventListener=function(o){
     var keys = [];
@@ -21,7 +22,10 @@ $.KeyEventListener=function(o){
     function onKeyDown(e){
 		keys[e.keyCode] = 1;
 		if(e.keyCode === $.KEY_CODES.r || e.keyCode === $.KEY_CODES.R){
-		    o.keyPress();
+		    o.restart();
+		}
+		if(e.keyCode === $.KEY_CODES.ENTER){
+		    o.start();
 		}
 	}
 	function onKeyUp(e){

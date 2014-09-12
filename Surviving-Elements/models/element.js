@@ -8,18 +8,22 @@ $.Element = function(){
 		types : {
 			Water : {
 				name : 'Water',
+				color : '#0180CA',
 				sprite : $.Sprite.getSprite('sprite_elements',{x : 40 , y : 0})
 			},
 			Fire : {
 				name : 'Fire',
+				color : '#CA0F01',
 				sprite : $.Sprite.getSprite('sprite_elements',{x : 0 , y : 0})
 			},
 			Ground : {
 				name : 'Ground',
+				color : '#655619',
 				sprite : $.Sprite.getSprite('sprite_elements',{x : 20 , y : 0})
 			},
 			Wind :{
 				name : 'Wind',
+				color : '#00FF00',
 				sprite : $.Sprite.getSprite('sprite_elements',{x : 60 , y : 0})
 			}
 		},
