@@ -236,24 +236,28 @@ $.Game = function(){
 		}
 	}
 	function onMouseMove(x,y){
-		cursor.move({ x : x , y : y});
-		hero.angle = hero.calculateAngle(x,y);
-		persuit();
+		if(started){
+			cursor.move({ x : x , y : y});
+			hero.angle = hero.calculateAngle(x,y);
+			persuit();
+		}
 	}
 	function onMouseClick(x,y,button){
 		var gunName;
-		if(button){
-			if(++gun == $.elements.length){
-				gun=0;
+		if(started){
+			if(button){
+				if(++gun == $.elements.length){
+					gun=0;
+				}
+				gunName = $.elements[gun];
+				$.es = eTypes[gunName];
+				current.className = gunName;
+				nameElement.innerHTML = gunName;
+				return false;
 			}
-			gunName = $.elements[gun];
-			$.es = eTypes[gunName];
-			current.className = gunName;
-			nameElement.innerHTML = gunName;
-			return false;
-		}
-		if(!gameOver){
-			hero.shot({ x : x , y : y});
+			if(!gameOver){
+				hero.shot({ x : x , y : y});
+			}
 		}
 	}
 	function persuit(){
