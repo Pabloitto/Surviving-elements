@@ -34,21 +34,6 @@ $.Element = function(){
 				'Ground' : e2.element.name === 'Wind' ? e1 : null,
 				'Wind' : e2.element.name === 'Water' ? e1 : null
 			}[e1.element.name];
-		},
-		compare:function(e1 , e2){
-			if(e1.element.name === e2.element.name){
-				return 0;	
-			}
-			switch (e1.element.name) {
-				case 'Fire':
-					return e2.element.name === 'Ground' ? 1 : -1;
-				case 'Water':
-					return e2.element.name === 'Fire' ? 1 : -1;
-				case 'Ground':
-					return e2.element.name === 'Wind' ? 1 : -1;
-				case 'Wind':
-					return e2.element.name === 'Water' ? 1 : -1;
-			}
 		}
 	}
 };
