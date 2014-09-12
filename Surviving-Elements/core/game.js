@@ -48,7 +48,7 @@ $.Game = function(){
 		hero = new $.Hero(canvas.width, canvas.height);
 		explosion = new $.Explosion();
 		elementHelper = new $.Element();
-		background = new $.Bg(canvas.width,canvas.height);
+		background = new $.Bg(55,25);
 		progressbar = new $.ProgressBar(progresscanvas.width,progresscanvas.height);
 		eTypes = elementHelper.types;
 		score.innerHTML = 'Score = 0';
