@@ -6,11 +6,11 @@
   <link rel="stylesheet" type="text/css" href="css/styles.css">
 </head>
 <body>
-  <div align="center" class="spriteElements"></div>
+  <div align="center"></div>
     <div id="divGame">
    		<div class="elements" style="height:100px;">
-    		<div style="height:20px;width:100%;">
-    		  <span id="current"></span><label id="nameElement"></label>
+    		<div style="margin-left:46%;height:20px;width:100px;">
+    		  <span id="current"></span><label id="nameElement" class="name"></label>
     		</div>
     		<div id="score"></div>
     		<div id="time"></div>
@@ -21,28 +21,68 @@
        	<canvas id="progresscanvas" class="progresscanvas"></canvas>
   			<div class="top">Surviving Elements</div>
         <canvas id="canvas" class="maincanvas" style="border:2px solid #000000;"></canvas>
-        <div class="controls">
-          <table>
+        <div class="controls center">
+          <table style="float:left">
             <tr>
-              <td>↑</td><td>UP</td>
+              <td>↑ : </td><td>UP</td>
             </tr>
             <tr>
-              <td>↓</td><td>DOWN</td>
+              <td>↓ : </td><td>DOWN</td>
             </tr>
             <tr>
-              <td>→</td><td>RIGHT</td>
+              <td>→ : </td><td>RIGHT</td>
             </tr>
             <tr>
-              <td>←</td><td>LEFT</td>
+              <td>← : </td><td>LEFT</td>
+            </tr>
+          </table>
+          <table style="float:left;margin-left:25%;">
+             <tr>
+              <td>Right Click : </td><td>Change Gun</td>
             </tr>
             <tr>
-              <td>Right Click</td><td>Change Gun</td>
+              <td>Left Click : </td><td>Shoot element bullet</td>
             </tr>
             <tr>
-              <td>Left Click</td><td>Shoot element bullet</td>
+              <td>Mouse Move : </td><td>Aim the target</td>
+            </tr>
+          </table>
+            <table id="elementRules" style="float:left;margin-left:20%;">
+            <tr>
+              <td>
+                <span id="current" class="Water"></span>
+                <label class="name">Water kills</label>
+              </td>
+              <td>
+                <span class="spriteElements fire"></span>
+              </td>
             </tr>
             <tr>
-              <td>Mouse Move</td><td>Aim the target</td>
+              <td>
+                <span id="current" class="Fire"></span>
+                <label class="name">Fire kills</label>
+              </td>
+              <td>
+                <span class="spriteElements rock"></span>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <span id="current" class="Ground"></span>
+                <label class="name">Earth kills</label>
+              </td>
+              <td>
+                <span class="spriteElements wind"></span>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <span id="current" class="Wind"></span>
+                <label class="name">Wind kills</label>
+              </td>
+              <td>
+                <span class="spriteElements water"></span>
+              </td>
             </tr>
           </table>
         </div>
