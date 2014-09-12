@@ -4,9 +4,8 @@ $.Enemy = (function(shape){
 		this.x = this.vectors.origin.x;
 		this.y = this.vectors.origin.y;
 		this.element = new $.Element().getRandomElement();
-		this.sprite = this.element.sprite; 
-		this.color = this.element.color;
-		this.health = 0;
+		this.sprite = this.element.sprite;
+		this.health = 1;
 		this.speed = 1;
 		this.maxHealth = 5;
 		this.calculateDirection(this.vectors);
@@ -30,13 +29,15 @@ $.Enemy = (function(shape){
 		this.health-=1;
 	}
 	Enemy.prototype.powerup = function(e){
-		this.speed += 0.1;
 		if(this.health < this.maxHealth){
 			this.health += 1;
+			this.speed += 0.1;
+			return true;
 		}
+		return false;
 	}
 	Enemy.prototype.isAlive = function(){
-		return this.health > 0;
+		return this.health > 1;
 	}
 	return Enemy;
 })($.Shape);

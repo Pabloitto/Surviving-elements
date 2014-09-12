@@ -1,18 +1,22 @@
 $.Game = function(){
 	var canvas = $.get('canvas'),
-		bg = $.get('bg'),
+		progresscanvas =  $.get('progresscanvas'),
 		current = $.get('current'),
 		score = $.get('score'),
 		time = $.get('time'),
+		txtlevel = $.get('txtlevel'),
+		txtenemies = $.get('txtenemies'),
 		countScore = 0,
 		explosion,
 		eTypes,
 		ctx,
-		ctxBg,
-	    	fps =  60,
+		pbCtx,
+	    fps =  60,
 		cursor,
 		hero,
 		background,
+		progressbar,
+		level = 1,
 		enemies = [],
 		keyEventListener,
 		mouseEventListener,
@@ -21,20 +25,19 @@ $.Game = function(){
 		gun=0,
 		elementHelper,
 		seconds=1,
-		generateEnemiesEach = 5;
+		generateEnemiesEach = 5,
+		enemiesKilled = 0,
+		timer;
 
 	function init(){
 		canvas.width = 1200;
-	        canvas.height = 400;
-	        initCharacters();
-	        bg.width = canvas.width;
-	        bg.height = canvas.height;
+	    canvas.height = 400;
+	    initCharacters();
 		ctx = canvas.getContext('2d');
-		ctxBg = bg.getContext('2d');
+		pbCtx = progresscanvas.getContext('2d');
 		bindEvents();
 		$.attr(current,{'innerHTML':$.elements[gun],'className':$.elements[gun] });
 		$.es = eTypes[$.elements[gun]];
-		setTime();
 		repaint();
 	}
 	function initCharacters(){
@@ -42,13 +45,20 @@ $.Game = function(){
 		hero = new $.Hero(canvas.width, canvas.height);
 		explosion = new $.Explosion();
 		elementHelper = new $.Element();
-		background = new $.Bg(1200,400);
+		background = new $.Bg(canvas.width,canvas.height);
+		progressbar = new $.ProgressBar(progresscanvas.width,progresscanvas.height);
 		eTypes = elementHelper.types;
 		score.innerHTML = 'Score = 0';
+		time.innerHTML = "Seconds : " + seconds;
+		txtlevel.innerHTML = 'Level : ' + level;
+		txtenemies.innerHTML = 'Enemies : ' + getEnemiesInLevel();
+		setTime();
 		generateEnemy();
 	}
 	function repaint(){
 		if(!gameOver){
+			paintBg();
+			paintPb();
 			paintHero();
 			paintEnemy();
 			paintBullets();
@@ -60,7 +70,6 @@ $.Game = function(){
 		}else{
 			gameOverAction();
 		}
-		paintBg();
 		setTimeout(repaint, fps);
 	}
 	function paintHero(){
@@ -80,13 +89,20 @@ $.Game = function(){
 		$.EnergyBarDrawable(hero.energybar).draw(ctx , hero.health);
 	}
 	function paintBg(){
-	    $.BgDrawable(background).draw(ctxBg,canvas.width,canvas.height);
+	    $.BgDrawable(background).draw(ctx,canvas.width,canvas.height);
+	}
+	function paintPb(){
+	    $.ProgressBarDrawable(progressbar).draw(pbCtx , getEnemiesInLevel() , enemiesKilled);
 	}
 	function gameOverAction(){
-		$.SoundsFactory.stop('music');
 		enemies = [];
 		hero.bullets = [];
 		levelSpeed = 0.1;
+		level = 1;
+		enemiesKilled = 0;
+		clearInterval(timer);
+		seconds = 1;
+		countScore = 0;
 		ctx.font = "30px Arial";
 		ctx.strokeText("Press R to try again",canvas.width / 2,canvas.height / 2);
 	}
@@ -104,13 +120,13 @@ $.Game = function(){
 				enemies[i].move(crash);
 			}
 			if(enemies[i]){
-				energyDrawable.draw(ctx , enemies[i].health >= enemies[i].maxHealth ? enemies[i].maxHealth : enemies[i].health);
+				energyDrawable.draw(ctx , enemies[i].health >= enemies[i].maxHealth ? enemies[i].maxHealth : enemies[i].health,true);
 			}
 		}
 	}
-	function generateEnemy(numberOfEnemies){
-		numberOfEnemies = numberOfEnemies || 1;
-		while(numberOfEnemies > 0){
+	function generateEnemy(){
+		var n = getEnemiesInLevel(), c = 0;
+		while(c < n){
 			var enemy = new $.Enemy({
 				origin : {x : Math.floor(Math.random() * (canvas.width)), 
 					y : Math.floor(Math.random() * (canvas.height - canvas.height / 4))
@@ -121,7 +137,7 @@ $.Game = function(){
 				enemy.speed+=levelSpeed;
 			}
 			enemies.push(enemy);
-			numberOfEnemies--;
+			c++;
 		}
 	}
 	function paintBullets(){
@@ -139,20 +155,22 @@ $.Game = function(){
 				if(isBulletWinner){
 					if(enemy.isAlive()){
 						enemy.hurt();
-		    				$.SoundsFactory.play('hurt');
+		    			$.SoundsFactory.play('hurt');
 					}else{
 						enemies.splice(r.i , 1);
-						explosion.create(enemy.x,enemy.y,enemy.color);
+						explosion.create(enemy.x,enemy.y);
 						score.innerHTML = "Score = " + (++countScore * 100);
 						$.SoundsFactory.play('explote');
-			    		}
-			    	}else if(hero.bullets[i].element.name === enemy.element.name){
-			    		enemy.powerup();
-			    		$.SoundsFactory.play('powerup');
+						enemiesKilled++;
+						nextLevel();
 			    	}
+			    }else if(hero.bullets[i].element.name === enemy.element.name){
+			    	enemy.powerup();
+			    	$.SoundsFactory.play('powerup');
+			    }
 				hero.bullets.splice(i,1);
-		    	}
-	    	}
+		    }
+	    }
 	    ctx.fill();
 	}
 	function intersectEnemyWithEnemy(currentEnemy){
@@ -161,9 +179,9 @@ $.Game = function(){
 			if(currentEnemy.id != enemies[i].id && 
 				($.intersect(currentEnemy,enemies[i]))){
 				if(currentEnemy.element.name === enemies[i].element.name){
-					currentEnemy.powerup(enemies[i]);
-			   		$.SoundsFactory.play('powerup');
-			   		enemies.splice(i,1);
+					if(currentEnemy.powerup() | enemies[i].powerup()){
+						$.SoundsFactory.play('powerup');
+					}
 				}else{
 					currentEnemy.isInCollision = 1;
 					return enemies[i];
@@ -201,7 +219,6 @@ $.Game = function(){
 		if(gameOver){
 			gameOver = 0;
 			initCharacters();
-			$.SoundsFactory.play('music',true);
 		}
 	}
 	function onMouseMove(x,y){
@@ -237,17 +254,27 @@ $.Game = function(){
 		}
 	}
 	function setTime(){
-		setInterval(function(){
+		timer = setInterval(function(){
 			++seconds;
 			time.innerHTML = "Seconds : " + seconds;
 			if((seconds % generateEnemiesEach) === 0){
-				generateEnemy(1);
 				levelSpeed+=0.1;
 			}
-			if((seconds % 20) === 0 && generateEnemiesEach > 1){
-				generateEnemiesEach-=1;
-			}
 		},1000);
+	}
+	function getEnemiesInLevel(){
+		return level * 3 - 1;
+	}
+	function nextLevel(){
+		var nEnemies = getEnemiesInLevel();
+		if(enemiesKilled === nEnemies){
+			level++;
+			enemies = [];
+			enemiesKilled = 0;
+			generateEnemy();
+			txtlevel.innerHTML = 'Level : ' + level;
+			txtenemies.innerHTML = 'Enemies : ' + getEnemiesInLevel();
+		}
 	}
 	init();
 };

@@ -12,9 +12,14 @@
     		<div id="current"></div>
     		<div id="score"></div>
     		<div id="time"></div>
+    		<div id="txtlevel"></div>
+    		<div id="txtenemies"></div>
      	</div>
-        <canvas id="bg"></canvas>
-        <canvas id="canvas" style="border:2px solid #000000;"></canvas>
+     	<div class="center">
+       	<canvas id="progresscanvas" class="progresscanvas"></canvas>
+  			<div class="top">Surviving Elements</div>
+        <canvas id="canvas" class="maincanvas" style="border:2px solid #000000;"></canvas>
+      </div>
     </div>
 </body>
 <script type="text/javascript" src="core/main.js"></script>
@@ -25,6 +30,7 @@
 <script type="text/javascript" src="listeners/keyevent.js"></script>
 <script type="text/javascript" src="listeners/mouseevent.js"></script>
 <script type="text/javascript" src="models/shape.js"></script>
+<script type="text/javascript" src="models/progressbar.js"></script>
 <script type="text/javascript" src="models/bg.js"></script>
 <script type="text/javascript" src="models/particle.js"></script>
 <script type="text/javascript" src="models/explosion.js"></script>
@@ -41,4 +47,5 @@
 <script type="text/javascript" src="painters/energybardrawable.js"></script>
 <script type="text/javascript" src="painters/enemydrawable.js"></script>
 <script type="text/javascript" src="painters/backgrounddrawable.js"></script>
+<script type="text/javascript" src="painters/progressbardrawable.js"></script>
 </html>

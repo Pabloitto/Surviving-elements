@@ -3,10 +3,10 @@ $.EnergyBarDrawable = function(b){
     function init(){
         bar = b;
     }
-    function draw(ctx,life){
+    function draw(ctx,life,canIncrement){
         ctx.beginPath();
         ctx.strokeStyle = bar.strokeColor;
-        ctx.rect(bar.x,bar.y,bar.width,bar.height);
+        ctx.rect(bar.x,bar.y, canIncrement ? (life || 1) * 10 : bar.width,bar.height);
         ctx.stroke();
         ctx.closePath();
         

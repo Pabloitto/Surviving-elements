@@ -13,10 +13,10 @@ $.Explosion = (function(shape){
 			}
 		}
 	};
-	Explosion.prototype.create = function(x,y,color){
+	Explosion.prototype.create = function(x,y){
 		this.x = x;
 		this.y = y;
-		this.color = color;
+		this.color = '#DF8C0C';
 		this.isExploting = 1;
 	};
 	return Explosion;

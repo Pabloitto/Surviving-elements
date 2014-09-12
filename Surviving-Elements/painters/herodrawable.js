@@ -6,7 +6,6 @@ $.HeroDrawable = function(h){
     function draw(ctx){
         var sprite = hero.getSprite();
 		ctx.save();
-		ctx.clearRect(0, 0, hero.cW, hero.cW);
 		ctx.translate(hero.x, hero.y);
 		ctx.rotate(hero.angle * Math.PI/180);
 		ctx.drawImage(sprite.image, 
