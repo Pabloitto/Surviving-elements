@@ -23,7 +23,7 @@ $.Game = function(){
 		mouseEventListener,
 		gameOver = 0,
 		started = 0,
-		levelSpeed=0.1,
+		levelSpeed=0.05,
 		gun=0,
 		elementHelper,
 		seconds=1,
@@ -104,7 +104,7 @@ $.Game = function(){
 	function gameOverAction(){
 		enemies = [];
 		hero.bullets = [];
-		levelSpeed = 0.1;
+		levelSpeed = 0.05;
 		level = 1;
 		enemiesKilled = 0;
 		clearInterval(timer);
@@ -124,7 +124,7 @@ $.Game = function(){
 			}
 			crash = intersectEnemyWithEnemy(enemies[i]);
 			if(enemies[i]){
-				enemies[i].move(crash);
+				enemies[i].move();
 			}
 			if(enemies[i]){
 				energyDrawable.draw(ctx , enemies[i].health >= enemies[i].maxHealth ? enemies[i].maxHealth : enemies[i].health,true);
@@ -274,7 +274,7 @@ $.Game = function(){
 				++seconds;
 				time.innerHTML = "Seconds : " + seconds;
 				if((seconds % generateEnemiesEach) === 0){
-					levelSpeed+=0.1;
+					levelSpeed+=0.05;
 				}
 			},1000);
 		}
