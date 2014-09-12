@@ -132,20 +132,33 @@ $.Game = function(){
 		}
 	}
 	function generateEnemy(){
-		var n = getEnemiesInLevel(), c = 0;
-		while(c < n){
-			var enemy = new $.Enemy({
-				origin : {x : Math.floor(Math.random() * (canvas.width)), 
-					y : Math.floor(Math.random() * (canvas.height - canvas.height / 4))
-				},
-				target : {x : hero.x + (hero.width / 2) , y : hero.y + (hero.height / 2)}
-			});
+		var n = getEnemiesInLevel(), count = 0;
+		while(count < n){
+			var enemy = createEnemyInFreePosition();
 			if(enemy.speed <= hero.speed){
 				enemy.speed+=levelSpeed;
 			}
 			enemies.push(enemy);
-			c++;
+			count++;
 		}
+	}
+	function createEnemyInFreePosition(){
+		var tempEnemy = getTemporalEnemy();
+		while($.intersect(tempEnemy,hero) || $.intersectWithArray(tempEnemy,enemies)){
+			tempEnemy = getTemporalEnemy();
+		}
+		return tempEnemy;
+	}
+	function getTemporalEnemy(){
+		var rdmPositions = {
+			x : Math.floor(Math.random() * (canvas.width)), 
+			y : Math.floor(Math.random() * (canvas.height - canvas.height / 4))
+		},
+		tempEnemy = new $.Enemy({
+			origin : rdmPositions,
+			target : {x : hero.x + (hero.width / 2) , y : hero.y + (hero.height / 2)}
+		});
+		return tempEnemy;
 	}
 	function paintBullets(){
 		ctx.beginPath();
